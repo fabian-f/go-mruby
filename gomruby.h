@@ -66,6 +66,9 @@ static inline mrb_func_t _go_mrb_func_t() {
   mrb_gc_protect(mrb, result); \
   return result;
 
+static mrb_value _go_mrb_runtime_exception(mrb_state *mrb, mrb_value reason) {
+  return mrb_exc_new_str(mrb, E_RUNTIME_ERROR, reason);
+}
 static mrb_value _go_mrb_load_string(mrb_state *mrb, const char *s) {
   GOMRUBY_EXC_PROTECT_START
   result = mrb_load_string(mrb, s);

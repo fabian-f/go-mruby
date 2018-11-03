@@ -376,9 +376,19 @@ func (m *Mrb) TrueValue() *MrbValue {
 	return newValue(m.state, C.mrb_true_value())
 }
 
+// ExceptionValue returns an Exception for a string
+func (m *Mrb) ExceptionValue(e string) *MrbValue {
+	return newValue(m.state, C._go_mrb_runtime_exception(m.state, m.StringValue(e).value))
+}
+
 // FixnumValue returns a Value for a fixed number.
 func (m *Mrb) FixnumValue(v int) *MrbValue {
 	return newValue(m.state, C.mrb_fixnum_value(C.mrb_int(v)))
+}
+
+// FloatValue returns a Value for a floating point number.
+func (m *Mrb) FloatValue(f float64) *MrbValue {
+	return newValue(m.state, C.mrb_float_value(m.state, C.mrb_float(f)))
 }
 
 // StringValue returns a Value for a string.
