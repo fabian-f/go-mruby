@@ -391,6 +391,13 @@ func (m *Mrb) FloatValue(f float64) *MrbValue {
 	return newValue(m.state, C.mrb_float_value(m.state, C.mrb_float(f)))
 }
 
+// SymbolValue returns a Value for a symbol (as string) specified.
+func (m *Mrb) SymbolValue(s string) *MrbValue {
+	cs := C.CString(s)
+	defer C.free(unsafe.Pointer(cs))
+	return newValue(m.state, C.mrb_symbol_value(C.mrb_intern_cstr(m.state, cs)))
+}
+
 // StringValue returns a Value for a string.
 func (m *Mrb) StringValue(s string) *MrbValue {
 	cs := C.CString(s)
